@@ -1,5 +1,7 @@
 import React from "react";
 
-export default function EpisodeCard() {
-  return <span>todo: episode</span>;
+const EpisodeCard = (props) => {
+  return <span>TODO: Episode</span>;
 }
+
+export default EpisodeCard;
