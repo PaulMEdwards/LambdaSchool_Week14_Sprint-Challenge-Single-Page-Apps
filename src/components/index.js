@@ -1,9 +1,12 @@
 export { default as Header } from './Header';
 export { default as WelcomePage } from './WelcomePage';
 export { default as CharacterList } from './CharacterList';
+export { default as Character } from './Character';
 export { default as CharacterCard } from './CharacterCard';
 export { default as LocationList } from './LocationList';
+export { default as Location } from './Location';
 export { default as LocationCard } from './LocationCard';
 export { default as EpisodeList } from './EpisodeList';
+export { default as Episode } from './Episode';
 export { default as EpisodeCard } from './EpisodeCard';
 export { default as SearchForm } from './SearchForm';

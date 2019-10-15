@@ -1,6 +1,10 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import {
+  NavLink
+  , Route
+} from 'react-router-dom';
 import styled from 'styled-components';
+import { EpisodeCard } from './';
 
 //#region Styled Component Definitions
 const Person = styled.div`
@@ -38,8 +42,22 @@ const PersonTertiaryData = styled.h4`
 //#endregion Styled Component Definitions
 
 const CharacterCard = (props) => {
-  // const { id, name, status, species, type, gender, origin, location, image, episode } = props.character;
-  const { id, name, status, species, type, gender, origin, location, image } = props.character;
+  console.log('CharacterCard props: ', props);
+  // debugger;
+  const {
+    id
+    , name
+    , status
+    , species
+    , type
+    , gender
+    , origin
+    , location
+    , episode
+    , image
+  } = props.character;
+  const showExtra = props.showExtra ? true : false;
+
   //#region Character API attributes description
   /*
     id	int	The id of the character.
@@ -61,7 +79,9 @@ const CharacterCard = (props) => {
     <Person>
       <div className="Person">
           <PersonPrimaryData>
-            <Link to={`/characters/${id}`}>{name}</Link>
+            <NavLink to={`/characters/${id}`} >
+              {name}
+            </NavLink>
           </PersonPrimaryData>
           <PersonSecondaryData className="character-status">
             <strong>Status:</strong> <em>{status}</em>
@@ -77,20 +97,40 @@ const CharacterCard = (props) => {
           <PersonTertiaryData className="character-gender">
             <strong>Gender:</strong> <em>{gender}</em>
           </PersonTertiaryData>
-          <PersonTertiaryData className="character-origin">
-            <strong>Origin:</strong> <em>{origin.name}</em>
-          </PersonTertiaryData>
-          <PersonTertiaryData className="character-location">
-            <strong>Location:</strong> <em>{location.name}</em>
-          </PersonTertiaryData>
-          {/* <PersonTertiaryData className="character-episode">
-            <strong>Episode(s):</strong> <em>{episode}</em>
-          </PersonTertiaryData> */}
+          { showExtra === true ?
+            <React.Fragment>
+              <PersonTertiaryData className="character-origin">
+                <strong>Origin:</strong> <em>{origin.name}</em>
+              </PersonTertiaryData>
+              <PersonTertiaryData className="character-location">
+                <strong>Location:</strong> <em>{location.name}</em>
+              </PersonTertiaryData>
+              <PersonTertiaryData className="character-episodes">
+                {/* <strong>Episode(s):</strong> <em>{episode}</em> */}
+                <strong>Episode(s):</strong><br />
+                <div className="episode-list">
+                  {
+                    episode.map(e => (
+                      <EpisodeDetails key={e.id} episode={e} />
+                    ))
+                  }
+                </div>
+              </PersonTertiaryData>
+            </React.Fragment> :
+            null
+          }
       </div>
       <div>
         <img src={image} alt={"Picture of "+name} />
       </div>
     </Person>
+  );
+}
+
+function EpisodeDetails({episode}) {
+  console.log('EpisodeDetails episode: ', episode);
+  return (
+    <Route render={() => <EpisodeCard id={episode.id} episode={episode} />} />
   );
 }
 

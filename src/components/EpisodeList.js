@@ -1,23 +1,22 @@
-// import React, { useEffect, useState } from "react";
 import React, { useEffect } from "react";
-// import { Route } from 'react-router-dom';
-// import { EpisodeCard } from "./";
+import { Episode } from "./";
 
 const EpisodeList = (props) => {
-  // const { endpoints, fetchData, episodeData, setEpisodeData } = props;
-  const { endpoints, fetchData, setEpisodeData } = props;
-
-  // const [episodeData, setEpisodeData] = useState([]);
+  const { fetchEpisodeData, episodeData } = props;
 
   useEffect(() => {
-    fetchData(endpoints["episodes"], setEpisodeData);
+    if (episodeData.length === 0) fetchEpisodeData();
     // eslint-disable-next-line
   }, []);
-  // }, [episodeData]);
 
   return (
-    <React.Fragment>
-    </React.Fragment>
+    <section className="episode-list">
+      {
+        episodeData.map(episode => (
+          <Episode key={episode.id} episode={episode} />
+        ))
+      }
+    </section>
   );
 }
 

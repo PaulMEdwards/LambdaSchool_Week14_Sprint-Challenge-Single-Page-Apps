@@ -1,20 +1,16 @@
-// import React, { useState, useEffect } from "react";
 import React, { useState } from "react";
 import { Route } from "react-router-dom/cjs/react-router-dom";
 import axios from "axios";
-// import { withFormik, Form, Field } from "formik";
-// import * as Yup from "yup";
-// import styled from 'styled-components';
 
 import {
   Header,
   WelcomePage,
   CharacterList,
-  CharacterCard,
+  Character,
   LocationList,
-  LocationCard,
+  Location,
   EpisodeList,
-  EpisodeCard,
+  Episode,
   SearchForm
 } from './components';
 
@@ -33,39 +29,108 @@ const App = () => {
   const [characterData, setCharacterData] = useState([]);
   const [locationData, setLocationData] = useState([]);
   const [episodeData, setEpisodeData] = useState([]);
+  
+  const [selectedCharacter, setSelectedCharacter] = useState({});
+  const [selectedLocation, setSelectedLocation] = useState({});
+  const [selectedEpisode, setSelectedEpisode] = useState({});
+  
+  const [searchData, setSearchData] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
   async function fetchData(endpoint, setFunction) {
     try {
       let promiseData = await axios.get(`${api_uri}${endpoint}`);
-      console.log('endpoint: ', endpoint);
-      console.log('data: ', promiseData);
+      console.log(`${endpoint} data: `, promiseData);
       setFunction(promiseData.data.results);
     } catch (error) {
       console.log(error);
     }
   }
 
+  function fetchCharacterData(character) {
+    if (typeof(character) === "undefined") {
+      fetchData(endpoints.characters, setCharacterData);
+    } else {
+      fetchData(`${endpoints.characters}/${character}`, setSelectedCharacter);
+    }
+  }
+  function fetchLocationData(location) {
+    if (typeof(location) === "undefined") {
+      fetchData(endpoints.locations, setLocationData);
+    } else {
+      fetchData(`${endpoints.locations}/${location}`, setSelectedLocation);
+    }
+  }
+  function fetchEpisodeData(episode) {
+    if (typeof(episode) === "undefined") {
+      fetchData(endpoints.episodes, setEpisodeData);
+    } else {
+      fetchData(`${endpoints.episodes}/${episode}`, setSelectedEpisode);
+    }
+  }
+
   return (
     <main>
+
       <Header />
 
-      {/* <WelcomePage /> */}
-
+      {/* Welcome */}
       <Route exact path="/" component={WelcomePage} />
 
-      {/* <Route path="/characters" component={CharacterList} /> */}
-      <Route exact path="/characters" render={(props) => <CharacterList {...props} endpoints={endpoints} fetchData={fetchData} characterData={characterData} setCharacterData={setCharacterData} />} />
-      <Route exact path="/characters/:id" render={(props) => <CharacterCard {...props} characterData={characterData} />} />
 
-      {/* <Route path="/locations" component={LocationList} /> */}
-      <Route exact path="/locations" render={(props) => <LocationList {...props} endpoints={endpoints} fetchData={fetchData} locationData={locationData} setLocationData={setLocationData} />} />
-      <Route exact path="/locations/:id" render={(props) => <LocationCard {...props} locationData={locationData} />} />
+      {/* Characters */}
+      <Route exact path="/characters" render={(props) => <CharacterList {...props}
+        fetchCharacterData={fetchCharacterData}
+        characterData={characterData} />}
+      />
 
-      {/* <Route path="/episodes" component={EpisodeList} /> */}
-      <Route exact path="/episodes" render={(props) => <EpisodeList {...props} endpoints={endpoints} fetchData={fetchData} episodeData={episodeData} setEpisodeData={setEpisodeData} />} />
-      <Route exact path="/episodes/:id" render={(props) => <EpisodeCard {...props} episodeData={episodeData} />} />
+      <Route exact path="/characters/:id" render={(props) => <Character {...props}
+        fetchCharacterData={fetchCharacterData}
+        setSelectedCharacter={setSelectedCharacter}
+        selectedCharacter={selectedCharacter}
+      />} />
 
-      <Route path="/search" component={SearchForm} />
+
+      {/* Locations */}
+      <Route exact path="/locations" render={(props) => <LocationList {...props}
+        fetchLocationData={fetchLocationData}
+        locationData={locationData}
+      />} />
+
+      <Route exact path="/locations/:id" render={(props) => <Location {...props}
+        fetchLocationData={fetchLocationData}
+        setSelectedLocation={setSelectedLocation}
+        selectedLocation={selectedLocation}
+      />} />
+
+
+      {/* Episodes */}
+      <Route exact path="/episodes" render={(props) => <EpisodeList {...props}
+        fetchEpisodeData={fetchEpisodeData}
+        episodeData={episodeData}
+      />} />
+
+      <Route exact path="/episodes/:id" render={(props) => <Episode {...props}
+        fetchEpisodeData={fetchEpisodeData}
+        setSelectedEpisode={setSelectedEpisode}
+        selectedEpisode={selectedEpisode}
+      />} />
+
+
+      {/* Search */}
+      <Route path="/search" render={(props) => <SearchForm {...props}
+        fetchCharacterData={fetchCharacterData}
+        characterData={characterData}
+        fetchLocationData={fetchLocationData}
+        locationData={locationData}
+        fetchEpisodeData={fetchEpisodeData}
+        episodeData={episodeData}
+        searchData={searchData}
+        setSearchData={setSearchData}
+        searchResults={searchResults}
+        setSearchResults={setSearchResults}
+      />} />
+
     </main>
   );
 }

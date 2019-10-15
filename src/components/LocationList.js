@@ -1,23 +1,22 @@
-// import React, { useEffect, useState } from "react";
 import React, { useEffect } from "react";
-// import { Route } from 'react-router-dom';
-// import { LocationCard } from "./";
+import { Location } from "./";
 
 const LocationList = (props) => {
-  // const { endpoints, fetchData, locationData, setLocationData } = props;
-  const { endpoints, fetchData, setLocationData } = props;
-
-  // const [locationData, setLocationData] = useState([]);
+  const { fetchLocationData, locationData } = props;
 
   useEffect(() => {
-    fetchData(endpoints["locations"], setLocationData);
+    if (locationData.length === 0) fetchLocationData();
     // eslint-disable-next-line
   }, []);
-  // }, [locationData]);
 
   return (
-    <React.Fragment>
-    </React.Fragment>
+    <section className="location-list">
+      {
+        locationData.map(location => (
+          <Location key={location.id} location={location} />
+        ))
+      }
+    </section>
   );
 }
 

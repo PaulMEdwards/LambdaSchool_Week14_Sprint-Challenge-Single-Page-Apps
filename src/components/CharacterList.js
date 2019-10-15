@@ -1,24 +1,20 @@
-// import React, { useEffect, useState } from "react";
 import React, { useEffect } from "react";
 import { Route } from 'react-router-dom';
 import { CharacterCard } from "./";
 
 const CharacterList = (props) => {
-  const { endpoints, fetchData, characterData, setCharacterData } = props;
+  const { fetchCharacterData, characterData, setSelectedCharacter } = props;
 
   useEffect(() => {
-    fetchData(endpoints["characters"], setCharacterData);
+    if (characterData.length === 0) fetchCharacterData();
     // eslint-disable-next-line
   }, []);
-  // }, [characterData]);
-
-  console.log('characterData: ', characterData);
 
   return (
     <section className="character-list">
       {
         characterData.map(character => (
-          <CharacterDetails key={character.id} character={character} />
+          <CharacterDetails key={character.id} character={character} setSelectedCharacter={setSelectedCharacter} />
         ))
       }
     </section>
@@ -26,8 +22,9 @@ const CharacterList = (props) => {
 }
 
 function CharacterDetails({character}) {
+  console.log('CharacterDetails character: ', character);
   return (
-    <Route render={(props) => <CharacterCard {...props} character={character} id={character.id} />} />
+    <Route render={() => <CharacterCard id={character.id} character={character} />} />
   );
 }
 

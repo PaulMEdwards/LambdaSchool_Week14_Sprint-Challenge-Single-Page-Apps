@@ -25,9 +25,9 @@ In this challenge, you will create a Single Page Application complete with Clien
 
 Demonstrate your understanding of this Sprint's concepts by answering the following free-form question(s). Edit this document to include your answers after each question.
 
-- [ ]  What are benefits of using `client-side routing`?
+- [x]  What are benefits of using `client-side routing`?
 
-> Answer: 
+> Answer: Client-side routing is a JavaScript managed routing option which offers direct control over site URL & content without necessarily having to wait for a server to respond with content, mimicking the appearance of traditional multi page websites, with the benefit of higher performance and ability to create a single-page-app.
 
 ## Project Set Up
 
@@ -75,14 +75,14 @@ _Add a Router to this application using [React Router](https://reacttraining.com
 
 _Add 'Search by Name' feature._
 
-- [ ]  Add the `<SearchForm />` component (see `./components/SearchForm.js`).
-- [ ]  Create a search form that will filter through the data displayed in the character list.
+- [x]  Add the `<SearchForm />` component (see `./components/SearchForm.js`).
+- [x]  Create a search form that will filter through the data displayed in the character list.
 
 ### **Required best practices:**
 
 - [x]  Consistent naming. Examples: variables, functions, Components, and file/folder organization.
 - [x]  Consistent spacing. Examples: line breaks, around arguments and before/after functions.
-- [ ]  Consistent quotation usage.
+- [x]  Consistent quotation usage.
 - [x]  Spell-check.
 - [ ]  Schedule time to review, refine and reassess your work.
 
@@ -101,9 +101,9 @@ There's a range of difficulty in the options below. 😈
 Start with the most *familiar (or fun) sounding* stretch goal.
 Complete search component to your list views.
 
-- [ ] Try adding 2 more components and display data from the episodes and locations end point.
-- [ ] https://rickandmortyapi.com/api/location/ - docs
-- [ ] https://rickandmortyapi.com/api/episode/ - docs
+- [x] Try adding 2 more components and display data from the episodes and locations end point.
+- [x] https://rickandmortyapi.com/api/location/ - docs
+- [x] https://rickandmortyapi.com/api/episode/ - docs
 
 - [ ]  Wire up the `onSearch(name)` callback prop to support [querying the API](https://rickandmortyapi.com/documentation/#filter-characters). (To search for `rick`, you would request `/api/character/?name=rick`.)
 - [ ]  Animate page transition and/or card loading.
@@ -122,7 +122,7 @@ Complete search component to your list views.
 
 > Follow these steps to complete your project:
 
-- [ ]  Submit a Pull Request to merge `<firstName-lastName>` branch into master (student's repo).
+- [x]  Submit a Pull Request to merge `<firstName-lastName>` branch into master (student's repo).
 - [ ]  Add your TL as a Reviewer on the Pull Request.
 - [ ]  TL then will count the HW as done by merging the branch into master.
 
