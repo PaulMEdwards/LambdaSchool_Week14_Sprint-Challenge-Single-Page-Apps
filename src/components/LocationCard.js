@@ -20,6 +20,11 @@ const Location = styled.div`
   justify-content: space-between;
   align-content: flex-start;
 `;
+const LocationPrimarySingle = styled.h2`
+  margin: 0;
+  color: black;
+  text-shadow: -3px -3px 0.25em #00000055, 3px 3px 0.5em white;
+`;
 const LocationPrimaryData = styled.h2`
   margin: 0 0 1.25em;
   color: black;
@@ -38,15 +43,17 @@ const LocationTertiaryData = styled.h4`
 //#endregion Styled Component Definitions
 
 const LocationCard = (props) => {
+  console.log('LocationCard props: ', props);
   const {
     id
     , name
     , type
     , dimension
-    , residents
+    // , residents
     // , url
     // , created
   } = props.location;
+  const showExtra = props.showExtra ? true : false;
 
   //#region Location API attributes description
   /*
@@ -60,27 +67,43 @@ const LocationCard = (props) => {
   */
   //#endregion Location API attributes description
 
-  return (
-    <Location>
-      <div className="Location">
-          <LocationPrimaryData>
-            <Link to={`/locations/${id}`}>{name}</Link>
-          </LocationPrimaryData>
-          <LocationSecondaryData className="location-name">
-            <strong>Name:</strong> <em>{name}</em>
-          </LocationSecondaryData>
-          <LocationSecondaryData className="location-type">
-            <strong>Type:</strong> <em>{type}</em>
-          </LocationSecondaryData>
-          <LocationTertiaryData className="location-dimension">
-            <strong>Dimension:</strong> <em>{dimension}</em>
-          </LocationTertiaryData>
-          <LocationTertiaryData className="location-residents">
-            <strong>Residents:</strong> <em>{residents}</em>
-          </LocationTertiaryData>
-      </div>
-    </Location>
-  );
+  if (!name) {
+    return (
+      <React.Fragment>
+        <div className="box">Loading episode data...</div>;
+      </React.Fragment>
+    )
+  } else {
+    return (
+      <Location>
+        <div className="Location">
+            { showExtra !== true
+              ?
+              <React.Fragment>
+                <LocationPrimarySingle>
+                <em>{type}&nbsp;</em> <Link to={`/locations/${id}`}>{name}</Link>
+                </LocationPrimarySingle>
+              </React.Fragment>
+              :
+              <React.Fragment>
+                <LocationPrimaryData>
+                  <strong>Name:</strong> <Link to={`/locations/${id}`}>{name}</Link>
+                </LocationPrimaryData>
+                <LocationSecondaryData className="location-type">
+                  <strong>Type:</strong> <em>{type}</em>
+                </LocationSecondaryData>
+                <LocationTertiaryData className="location-dimension">
+                  <strong>Dimension:</strong> <em>{dimension}</em>
+                </LocationTertiaryData>
+                {/* <LocationTertiaryData className="location-residents">
+                  <strong>Residents:</strong> <em>{residents}</em>
+                </LocationTertiaryData> */}
+              </React.Fragment>
+            }
+        </div>
+      </Location>
+    );
+  }
 }
 
 export default LocationCard;

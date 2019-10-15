@@ -41,10 +41,10 @@ const App = () => {
     try {
       let promiseData = await axios.get(`${api_uri}${endpoint}`);
       console.log(`${endpoint} data: `, promiseData);
-      if (!promiseData.data.results && promiseData.data) {
-        setFunction(promiseData.data);
-      } else {
+      if (promiseData.data.results) {
         setFunction(promiseData.data.results);
+      } else if (promiseData.data) {
+        setFunction(promiseData.data);
       }
     } catch (error) {
       console.log(error);
@@ -106,7 +106,6 @@ const App = () => {
 
       <Route exact path="/locations/:id" render={(props) => <Location {...props}
         fetchLocationData={fetchLocationData}
-        setSelectedLocation={setSelectedLocation}
         selectedLocation={selectedLocation}
       />} />
 
@@ -119,7 +118,6 @@ const App = () => {
 
       <Route exact path="/episodes/:id" render={(props) => <Episode {...props}
         fetchEpisodeData={fetchEpisodeData}
-        setSelectedEpisode={setSelectedEpisode}
         selectedEpisode={selectedEpisode}
       />} />
 

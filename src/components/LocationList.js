@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { Location } from "./";
+import { Route } from 'react-router-dom';
+import { LocationCard } from "./";
 
 const LocationList = (props) => {
   const { fetchLocationData, locationData } = props;
@@ -13,11 +14,22 @@ const LocationList = (props) => {
     <section className="location-list">
       {
         locationData.map(location => (
-          <Location key={location.id} location={location} />
+          <LocationDetails key={location.id} location={location} />
         ))
       }
     </section>
   );
+}
+
+function LocationDetails({location}) {
+  console.log('LocationDetails location: ', location);
+  if (!location) {
+    return <div className="box">Loading location list...</div>;
+  } else {
+    return (
+      <Route render={() => <LocationCard id={location.id} location={location} />} />
+    );
+  }
 }
 
 export default LocationList;

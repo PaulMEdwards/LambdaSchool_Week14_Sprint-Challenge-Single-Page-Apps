@@ -20,6 +20,11 @@ const Episode = styled.div`
   justify-content: space-between;
   align-content: flex-start;
 `;
+const EpisodePrimarySingle = styled.h2`
+  margin: 0;
+  color: black;
+  text-shadow: -3px -3px 0.25em #00000055, 3px 3px 0.5em white;
+`;
 const EpisodePrimaryData = styled.h2`
   margin: 0 0 1.25em;
   color: black;
@@ -38,15 +43,17 @@ const EpisodeTertiaryData = styled.h4`
 //#endregion Styled Component Definitions
 
 const EpisodeCard = (props) => {
+  console.log('EpisodeCard props: ', props);
   const {
     id
     , name
     , air_date
     , episode
-    , characters
+    // , characters
     // , url
     // , created
   } = props.episode;
+  const showExtra = props.showExtra ? true : false;
 
   //#region Episode API attributes description
   /*
@@ -60,27 +67,44 @@ const EpisodeCard = (props) => {
   */
   //#endregion Episode API attributes description
 
-  return (
-    <Episode>
-      <div className="Episode">
-          <EpisodePrimaryData>
-            <Link to={`/episodes/${id}`}>{name}</Link>
-          </EpisodePrimaryData>
-          <EpisodeSecondaryData className="episode-name">
-            <strong>Name:</strong> <em>{name}</em>
-          </EpisodeSecondaryData>
-          <EpisodeTertiaryData className="episode-episode">
-            <strong>Episode:</strong> <em>{episode}</em>
-          </EpisodeTertiaryData>
-          <EpisodeTertiaryData className="episode-characters">
-            <strong>Characters:</strong> <em>{characters}</em>
-          </EpisodeTertiaryData>
-          <EpisodeTertiaryData className="episode-air_date">
-            <strong>Air Date:</strong> <em>{air_date}</em>
-          </EpisodeTertiaryData>
-      </div>
-    </Episode>
-  );
+  if (!name) {
+    return (
+      <React.Fragment>
+        <div className="box">Loading episode data...</div>;
+      </React.Fragment>
+    )
+  } else {
+    return (
+      <Episode>
+        <div className="Episode">
+          { showExtra !== true
+            ?
+            <React.Fragment>
+              <EpisodePrimarySingle>
+                <em className="episode-episode">{episode}&nbsp;</em> <Link className="episode-name" to={`/episodes/${id}`}>{name}</Link>
+              </EpisodePrimarySingle>
+            </React.Fragment>
+            :
+            <React.Fragment>
+              <EpisodePrimaryData className="episode-name">
+                { showExtra && <strong>Name:&nbsp;</strong> }
+                <Link to={`/episodes/${id}`}>{name}</Link>
+              </EpisodePrimaryData>
+              <EpisodeSecondaryData className="episode-episode">
+                <strong>Episode:</strong> <em>{episode}</em>
+              </EpisodeSecondaryData>
+              <EpisodeTertiaryData className="episode-air_date">
+                <strong>Air Date:</strong> <em>{air_date}</em>
+              </EpisodeTertiaryData>
+              {/* <EpisodeTertiaryData className="episode-characters">
+                <strong>Characters:</strong> <em>{characters}</em>
+              </EpisodeTertiaryData> */}
+            </React.Fragment>
+          }
+        </div>
+      </Episode>
+    );
+  }
 }
 
 export default EpisodeCard;

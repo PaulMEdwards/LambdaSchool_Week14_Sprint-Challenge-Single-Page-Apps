@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { Episode } from "./";
+import { Route } from 'react-router-dom';
+import { EpisodeCard } from "./";
 
 const EpisodeList = (props) => {
   const { fetchEpisodeData, episodeData } = props;
@@ -13,11 +14,22 @@ const EpisodeList = (props) => {
     <section className="episode-list">
       {
         episodeData.map(episode => (
-          <Episode key={episode.id} episode={episode} />
+          <EpisodeDetails key={episode.id} episode={episode} />
         ))
       }
     </section>
   );
+}
+
+function EpisodeDetails({episode}) {
+  console.log('EpisodeDetails episode: ', episode);
+  if (!episode) {
+    return <div className="box">Loading episode list...</div>;
+  } else {
+    return (
+      <Route render={() => <EpisodeCard id={episode.id} episode={episode} />} />
+    );
+  }
 }
 
 export default EpisodeList;

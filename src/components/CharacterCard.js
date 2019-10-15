@@ -75,12 +75,17 @@ const CharacterCard = (props) => {
   //#endregion Character API attributes description
 
   if (!name) {
-    return <div className="box">Loading character data...</div>;
+    return (
+      <React.Fragment>
+        <div className="box">Loading character data...</div>;
+      </React.Fragment>
+    )
   } else {
     return (
       <Person>
         <div className="Person">
             <PersonPrimaryData>
+              { showExtra && <strong>Name:&nbsp;</strong> }
               <NavLink to={`/characters/${id}`} >
                 {name}
               </NavLink>
