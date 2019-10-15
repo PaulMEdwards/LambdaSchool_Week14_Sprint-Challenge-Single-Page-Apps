@@ -1,10 +1,10 @@
 import React from "react";
 import {
   NavLink
-  , Route
+  // , Route
 } from 'react-router-dom';
 import styled from 'styled-components';
-import { EpisodeCard } from './';
+// import { EpisodeCard } from './';
 
 //#region Styled Component Definitions
 const Person = styled.div`
@@ -43,7 +43,6 @@ const PersonTertiaryData = styled.h4`
 
 const CharacterCard = (props) => {
   console.log('CharacterCard props: ', props);
-  // debugger;
   const {
     id
     , name
@@ -53,7 +52,7 @@ const CharacterCard = (props) => {
     , gender
     , origin
     , location
-    , episode
+    // , episode
     , image
   } = props.character;
   const showExtra = props.showExtra ? true : false;
@@ -75,63 +74,72 @@ const CharacterCard = (props) => {
   */
   //#endregion Character API attributes description
 
-  return (
-    <Person>
-      <div className="Person">
-          <PersonPrimaryData>
-            <NavLink to={`/characters/${id}`} >
-              {name}
-            </NavLink>
-          </PersonPrimaryData>
-          <PersonSecondaryData className="character-status">
-            <strong>Status:</strong> <em>{status}</em>
-          </PersonSecondaryData>
-          <PersonSecondaryData className="character-species">
-            <strong>Species:</strong> <em>{species}</em>
-          </PersonSecondaryData>
-          { type &&
-          <PersonTertiaryData className="character-type">
-            <strong>Type:</strong> <em>{type}</em>
-          </PersonTertiaryData>
+  if (!name) {
+    return <div className="box">Loading character data...</div>;
+  } else {
+    return (
+      <Person>
+        <div className="Person">
+            <PersonPrimaryData>
+              <NavLink to={`/characters/${id}`} >
+                {name}
+              </NavLink>
+            </PersonPrimaryData>
+            <PersonSecondaryData className="character-status">
+              <strong>Status:</strong> <em>{status}</em>
+            </PersonSecondaryData>
+            <PersonSecondaryData className="character-species">
+              <strong>Species:</strong> <em>{species}</em>
+            </PersonSecondaryData>
+            { type &&
+            <PersonTertiaryData className="character-type">
+              <strong>Type:</strong> <em>{type}</em>
+            </PersonTertiaryData>
+            }
+            <PersonTertiaryData className="character-gender">
+              <strong>Gender:</strong> <em>{gender}</em>
+            </PersonTertiaryData>
+            { showExtra === true ?
+              <React.Fragment>
+                <PersonTertiaryData className="character-origin">
+                  <strong>Origin:</strong> <em>{origin && origin.name}</em>
+                </PersonTertiaryData>
+                <PersonTertiaryData className="character-location">
+                  <strong>Location:</strong> <em>{location && location.name}</em>
+                </PersonTertiaryData>
+                {/* { episode &&
+                  <PersonTertiaryData className="character-episodes">
+                    <strong>Episode(s):</strong> <em>{episode}</em>
+                    <div className="episode-list">
+                      {
+                        episode.forEach(e => (
+                          <React.Fragment>
+                            <EpisodeDetails key={e.id} episode={e} />
+                          </React.Fragment>
+                        ))
+                      }
+                    </div>
+                  </PersonTertiaryData>
+                } */}
+              </React.Fragment> :
+              null
+            }
+        </div>
+        <div>
+          { image &&
+            <img src={image} alt={"Picture of "+name} />
           }
-          <PersonTertiaryData className="character-gender">
-            <strong>Gender:</strong> <em>{gender}</em>
-          </PersonTertiaryData>
-          { showExtra === true ?
-            <React.Fragment>
-              <PersonTertiaryData className="character-origin">
-                <strong>Origin:</strong> <em>{origin.name}</em>
-              </PersonTertiaryData>
-              <PersonTertiaryData className="character-location">
-                <strong>Location:</strong> <em>{location.name}</em>
-              </PersonTertiaryData>
-              <PersonTertiaryData className="character-episodes">
-                {/* <strong>Episode(s):</strong> <em>{episode}</em> */}
-                <strong>Episode(s):</strong><br />
-                <div className="episode-list">
-                  {
-                    episode.map(e => (
-                      <EpisodeDetails key={e.id} episode={e} />
-                    ))
-                  }
-                </div>
-              </PersonTertiaryData>
-            </React.Fragment> :
-            null
-          }
-      </div>
-      <div>
-        <img src={image} alt={"Picture of "+name} />
-      </div>
-    </Person>
-  );
+        </div>
+      </Person>
+    );
+  }
 }
 
-function EpisodeDetails({episode}) {
-  console.log('EpisodeDetails episode: ', episode);
-  return (
-    <Route render={() => <EpisodeCard id={episode.id} episode={episode} />} />
-  );
-}
+// function EpisodeDetails({episode}) {
+//   console.log('EpisodeDetails episode: ', episode);
+//   return (
+//     <Route render={() => <EpisodeCard id={episode.id} episode={episode} />} />
+//   );
+// }
 
 export default CharacterCard;

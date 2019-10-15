@@ -52,3 +52,13 @@ nav {
   align-content: space-around;
   justify-content: space-around;
 }
+
+.box {
+  padding: 20px;
+  margin: 2em 1em;
+  background-color: #00000009;
+  border: thin white;
+  border-size: 3px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 0.25em #00000055, 0px 0px 0.5em white;
+}

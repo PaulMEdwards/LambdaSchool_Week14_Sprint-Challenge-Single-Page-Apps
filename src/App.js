@@ -41,31 +41,39 @@ const App = () => {
     try {
       let promiseData = await axios.get(`${api_uri}${endpoint}`);
       console.log(`${endpoint} data: `, promiseData);
-      setFunction(promiseData.data.results);
+      if (!promiseData.data.results && promiseData.data) {
+        setFunction(promiseData.data);
+      } else {
+        setFunction(promiseData.data.results);
+      }
     } catch (error) {
       console.log(error);
     }
   }
 
-  function fetchCharacterData(character) {
-    if (typeof(character) === "undefined") {
+  function fetchCharacterData(id) {
+    if (typeof(id) === "undefined") {
+      console.log('fetchCharacterData all');
       fetchData(endpoints.characters, setCharacterData);
     } else {
-      fetchData(`${endpoints.characters}/${character}`, setSelectedCharacter);
+      console.log('fetchCharacterData id: ', id);
+      fetchData(`${endpoints.characters}/${id}`, setSelectedCharacter);
     }
   }
-  function fetchLocationData(location) {
-    if (typeof(location) === "undefined") {
+  function fetchLocationData(id) {
+    console.log('fetchLocationData id: ', id);
+    if (typeof(id) === "undefined") {
       fetchData(endpoints.locations, setLocationData);
     } else {
-      fetchData(`${endpoints.locations}/${location}`, setSelectedLocation);
+      fetchData(`${endpoints.locations}/${id}`, setSelectedLocation);
     }
   }
-  function fetchEpisodeData(episode) {
-    if (typeof(episode) === "undefined") {
+  function fetchEpisodeData(id) {
+    console.log('fetchEpisodeData id: ', id);
+    if (typeof(id) === "undefined") {
       fetchData(endpoints.episodes, setEpisodeData);
     } else {
-      fetchData(`${endpoints.episodes}/${episode}`, setSelectedEpisode);
+      fetchData(`${endpoints.episodes}/${id}`, setSelectedEpisode);
     }
   }
 
@@ -81,12 +89,11 @@ const App = () => {
       {/* Characters */}
       <Route exact path="/characters" render={(props) => <CharacterList {...props}
         fetchCharacterData={fetchCharacterData}
-        characterData={characterData} />}
-      />
+        characterData={characterData}
+      />} />
 
       <Route exact path="/characters/:id" render={(props) => <Character {...props}
         fetchCharacterData={fetchCharacterData}
-        setSelectedCharacter={setSelectedCharacter}
         selectedCharacter={selectedCharacter}
       />} />
 

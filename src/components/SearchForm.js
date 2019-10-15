@@ -53,7 +53,7 @@ const SearchForm = props => {
 
   return (
     <section className="search-form">
-      <form>
+      <form className="box">
         <label htmlFor="character-search">Character Search:&nbsp;</label>
         <input
           id="character-search"
