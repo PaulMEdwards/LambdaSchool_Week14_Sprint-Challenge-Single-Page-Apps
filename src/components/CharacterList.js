@@ -1,16 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { Route } from 'react-router-dom';
+import { CharacterCard } from "./";
 
-export default function CharacterList() {
-  // TODO: Add useState to track data from useEffect
+const CharacterList = (props) => {
+  const { fetchCharacterData, characterData } = props;
 
   useEffect(() => {
-    // TODO: Add API Request here - must run in `useEffect`
-    //  Important: verify the 2nd `useEffect` parameter: the dependancies array!
+    if (!characterData || characterData.length === 0) fetchCharacterData();
+    // eslint-disable-next-line
   }, []);
 
   return (
     <section className="character-list">
-      <h2>TODO: `array.map()` over your state here!</h2>
+      { characterData &&
+        characterData.map(character => (
+          <CharacterDetails key={character.id} character={character} />
+        ))
+      }
     </section>
   );
 }
+
+function CharacterDetails({character}) {
+  console.log('CharacterDetails character: ', character);
+  if (!character) {
+    return <div className="box">Loading character list...</div>;
+  } else {
+    return (
+      <Route render={() => <CharacterCard id={character.id} character={character} />} />
+    );
+  }
+}
+
+export default CharacterList;
