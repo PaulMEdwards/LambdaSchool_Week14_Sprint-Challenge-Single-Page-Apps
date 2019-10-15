@@ -6,13 +6,13 @@ const EpisodeList = (props) => {
   const { fetchEpisodeData, episodeData } = props;
 
   useEffect(() => {
-    if (episodeData.length === 0) fetchEpisodeData();
+    if (!episodeData || episodeData.length === 0) fetchEpisodeData();
     // eslint-disable-next-line
   }, []);
 
   return (
     <section className="episode-list">
-      {
+      { episodeData &&
         episodeData.map(episode => (
           <EpisodeDetails key={episode.id} episode={episode} />
         ))

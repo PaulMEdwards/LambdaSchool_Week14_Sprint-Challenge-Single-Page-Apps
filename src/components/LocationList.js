@@ -6,13 +6,13 @@ const LocationList = (props) => {
   const { fetchLocationData, locationData } = props;
 
   useEffect(() => {
-    if (locationData.length === 0) fetchLocationData();
+    if (!locationData || locationData.length === 0) fetchLocationData();
     // eslint-disable-next-line
   }, []);
 
   return (
     <section className="location-list">
-      {
+      { locationData &&
         locationData.map(location => (
           <LocationDetails key={location.id} location={location} />
         ))

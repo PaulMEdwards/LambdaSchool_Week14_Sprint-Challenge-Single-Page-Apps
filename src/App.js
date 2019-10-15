@@ -33,9 +33,6 @@ const App = () => {
   const [selectedCharacter, setSelectedCharacter] = useState({});
   const [selectedLocation, setSelectedLocation] = useState({});
   const [selectedEpisode, setSelectedEpisode] = useState({});
-  
-  const [searchData, setSearchData] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
 
   async function fetchData(endpoint, setFunction) {
     try {
@@ -61,18 +58,20 @@ const App = () => {
     }
   }
   function fetchLocationData(id) {
-    console.log('fetchLocationData id: ', id);
     if (typeof(id) === "undefined") {
+      console.log('fetchLocationData all');
       fetchData(endpoints.locations, setLocationData);
     } else {
+      console.log('fetchLocationData id: ', id);
       fetchData(`${endpoints.locations}/${id}`, setSelectedLocation);
     }
   }
   function fetchEpisodeData(id) {
-    console.log('fetchEpisodeData id: ', id);
     if (typeof(id) === "undefined") {
+      console.log('fetchEpisodeData all');
       fetchData(endpoints.episodes, setEpisodeData);
     } else {
+      console.log('fetchEpisodeData id: ', id);
       fetchData(`${endpoints.episodes}/${id}`, setSelectedEpisode);
     }
   }
@@ -130,10 +129,6 @@ const App = () => {
         locationData={locationData}
         fetchEpisodeData={fetchEpisodeData}
         episodeData={episodeData}
-        searchData={searchData}
-        setSearchData={setSearchData}
-        searchResults={searchResults}
-        setSearchResults={setSearchResults}
       />} />
 
     </main>

@@ -6,13 +6,13 @@ const CharacterList = (props) => {
   const { fetchCharacterData, characterData } = props;
 
   useEffect(() => {
-    if (characterData.length === 0) fetchCharacterData();
+    if (!characterData || characterData.length === 0) fetchCharacterData();
     // eslint-disable-next-line
   }, []);
 
   return (
     <section className="character-list">
-      {
+      { characterData &&
         characterData.map(character => (
           <CharacterDetails key={character.id} character={character} />
         ))
